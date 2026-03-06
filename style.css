@@ -1,0 +1,935 @@
+:root {
+  --shadow-offset: 10px;
+  --shadow-border-color: pink;
+  --bg-color: #f8f5f2;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* Full bleed for hero */
+  background-color: var(--bg-color);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  position: relative;
+  /* Ensure body is the positioning context if needed, though fixed works regardless */
+}
+
+/* Hero Section */
+.hero-section {
+  height: 100vh;
+  width: 100%;
+  background-color: var(--bg-color);
+  /* Removed background-image */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  /* Ensure overlay doesn't spill if anything goes wrong */
+}
+
+/* Overlay for scroll fade effect */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  /* Or a dark theme color */
+  opacity: 0;
+  /* Starts transparent */
+  z-index: 10000;
+  /* Above the global noise layer (z-index 9999) */
+  pointer-events: none;
+}
+
+/* About Me Section */
+.about-section {
+  min-height: 80vh;
+  width: 100%;
+  background-image: url('./src/assets/about_background.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 10000;
+  /* Sit on top of noise */
+}
+
+.about-content {
+  text-align: center;
+  /* Removed card background/shadow/border */
+  padding: 0 20px;
+  /* Keep some horizontal padding for mobile safety */
+  max-width: 800px;
+  /* Wider text block */
+}
+
+.about-content h2 {
+  font-size: 3rem;
+  /* Bigger title */
+  margin-bottom: 30px;
+  color: #333;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+  /* Ensure readability */
+  transition: color 0.3s ease;
+}
+
+.about-content a:hover h2 {
+  color: #ff69b4;
+  /* Pink on hover */
+}
+
+.about-content p {
+  font-size: 1.25rem;
+  margin-bottom: 40px;
+  color: #333;
+  /* Darker for better contrast without white bg */
+  font-weight: 500;
+  line-height: 1.8;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #ff69b4;
+  /* HotPink */
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  /* Pill shape */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.cta-button:hover {
+  background-color: #ff1493;
+  /* DeepPink */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+}
+
+/* Ensure text stays on top of overlay so it remains readable while bg fades */
+.hero-title,
+.main-nav {
+  z-index: 10001;
+  /* Above the overlay */
+  position: relative;
+  /* Ensure z-index works for title (nav is already absolute or relative) */
+}
+
+.hero-title {
+  font-size: 5rem;
+  color: #333;
+  /* Dark text on pastel background usually better, or white if dark bg */
+  font-weight: 800;
+  text-align: center;
+  margin: 0;
+  /* Optional: explicit text shadow if background is busy */
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  color: #333;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10001;
+  animation: bounce 2s infinite;
+}
+
+.scroll-indicator:hover {
+  opacity: 1;
+  animation-play-state: paused;
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  40% {
+    transform: translateX(-50%) translateY(-12px);
+  }
+
+  60% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+
+/* 3D Carousel in Hero */
+.carousel-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 400px;
+  perspective: 1200px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* pointer-events enabled for hover detection */
+}
+
+.carousel-3d {
+  position: relative;
+  width: 160px;
+  height: 200px;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  cursor: grab;
+  pointer-events: auto;
+}
+
+.carousel-3d:active {
+  cursor: grabbing;
+}
+
+.carousel-item {
+  position: absolute;
+  width: 160px;
+  height: 200px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  backface-visibility: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-item:hover {
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.4),
+    0 0 0 3px rgba(255, 105, 180, 0.6);
+}
+
+.carousel-item:focus {
+  outline: 3px solid #ff69b4;
+  outline-offset: 2px;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.carousel-item-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-item:hover .carousel-item-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero title above carousel */
+.hero-section .hero-title {
+  position: relative;
+  z-index: 10;
+}
+
+/* Navigation Bar */
+.main-nav {
+  position: absolute;
+  /* Overlay on hero */
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  margin-bottom: 0;
+  z-index: 10001;
+  /* Matched to be above overlay */
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav li {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.main-nav li:not(:last-child)::after {
+  content: "";
+  width: 1px;
+  /* Vertical line thickness */
+  height: 15px;
+  /* Height of the separator */
+  background-color: #ddd;
+  /* Soft line */
+  margin: 0 50px;
+  /* Spacing around the line */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  /* Slightly lighter weight for elegance */
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #ff69b4;
+  /* HotPink */
+}
+
+
+
+
+.signature {
+  font-family: 'Inter', sans-serif;
+  font-size: 3rem;
+  color: #ff69b4;
+  /* HotPink */
+  transform: rotate(-5deg);
+  display: inline-block;
+  /* Ink bleed simulation: */
+  /* 1st shadow: immediate spread (bleed) */
+  /* 2nd shadow: softer outer glow */
+  text-shadow:
+    0 0 2px #ff69b4,
+    0 0 4px rgba(255, 105, 180, 0.4);
+  filter: blur(0.4px);
+  /* Slight overall blur for marker feel */
+  cursor: default;
+  position: relative;
+  /* Needed for z-index */
+  z-index: 10000;
+  /* Sit on top of noise */
+}
+
+/* Case Study Layout */
+.case-study-layout .collage-content {
+  position: relative;
+  /* We overrode defaults inline for the wrapper, but let's ensure children behave */
+}
+
+.case-study-image {
+  width: 85%;
+  /* Leave room for the sidebar overlap */
+  position: relative;
+  z-index: 1;
+  /* Add default collage style to image explicitly if we removed it from parent */
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.anti-box-sidebar {
+  position: absolute;
+  top: 15%;
+  right: 0;
+  /* Align to right */
+  width: 35%;
+  /* Overlap */
+  background-color: #ffd700;
+  /* Gold */
+  color: #333;
+  padding: 30px;
+  z-index: 2;
+  /* On top of image */
+
+  /* The "Hand-Drawn" Border Radius */
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+  transform: rotate(2deg);
+  /* Slight rotation for extra organic feel */
+  transition: transform 0.3s ease;
+}
+
+.anti-box-sidebar:hover {
+  transform: rotate(1deg) scale(1.02);
+}
+
+
+/* h1 removed/updated for hero */
+
+
+.collage-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  /* Restored padding from body */
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  /* Space between collage items */
+}
+
+.collage-wrapper {
+  position: relative;
+  z-index: 10000;
+  /* Sit on top of global noise filter (9999) */
+  /* Ensure enough space for the shadow not to get cut off if consistent overflow issues arise,
+     though margin/gap usually handles it. */
+}
+
+.collage-shadow {
+  position: absolute;
+  top: var(--shadow-offset);
+  left: var(--shadow-offset);
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--shadow-border-color);
+  background-color: transparent;
+  z-index: 0;
+  pointer-events: none;
+  /* Let clicks pass through */
+  box-sizing: border-box;
+}
+
+.collage-content {
+  position: relative;
+  z-index: 1;
+  background-color: white;
+  padding: 30px;
+  border: 1px solid #eee;
+  /* Subtle border for the card itself */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  /* Very subtle depth */
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for fun - lifts the card slightly */
+.collage-wrapper:hover .collage-content {
+  transform: translateY(-2px) !important;
+  /* Override inline rotation for a sec? No, that breaks rotation. */
+  /* Better to apply scale or just leave rotation as is. 
+     Let's keep it simple for now to strict specs. */
+}
+
+/* Technical Grid Pattern */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  position: relative;
+}
+
+/* Forms Research Typography & Layout */
+.forms-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 14vw;
+  /* Massive responsive size */
+  line-height: 0.8;
+  color: #B22222;
+  /* Brutalist Red */
+  text-transform: uppercase;
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+  /* Let clicks pass to images if needed */
+  letter-spacing: -0.02em;
+}
+
+.forms-scatter-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  /* Give it plenty of room */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* Align text to left or center? Ref image has mixed align. */
+  padding: 20px;
+  overflow: hidden;
+  /* Keep images inside */
+}
+
+/* Specific Sketch Positioning */
+.sketch-img {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  /* Subtle technical border */
+  background: transparent;
+  /* Or multiply blend mode? Reference shows clean paper look */
+  mix-blend-mode: multiply;
+  /* Make white bg transparent-ish */
+}
+
+.sketch-1 {
+  /* Organic Seating - Top Right */
+  top: 5%;
+  right: 5%;
+  width: 35%;
+  max-width: 500px;
+  transform: rotate(5deg);
+  z-index: 5;
+}
+
+.sketch-2 {
+  /* Exploded View - Middle Left overlapping text? */
+  top: 40%;
+  left: -5%;
+  width: 30%;
+  max-width: 400px;
+  transform: rotate(-10deg);
+  z-index: 1;
+  /* Behind text */
+  opacity: 0.8;
+}
+
+.sketch-3 {
+  /* Ergonomic Diagram - Bottom Right */
+  bottom: 5%;
+  right: 15%;
+  width: 25%;
+  max-width: 350px;
+  transform: rotate(-3deg);
+  z-index: 5;
+}
+
+.forms-text-block {
+  position: relative;
+  z-index: 10;
+  margin-left: 5%;
+  /* Offset from left */
+  mix-blend-mode: darken;
+  /* Help text sit on top */
+}
+
+/* Add a subtle technical crosshair at intersections if we wanted to go deeper, 
+   but for now just the grid lines are clean. */
+
+/* ===========================================
+   PORTFOLIO GALLERY STYLES
+   =========================================== */
+
+.portfolio-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  position: relative;
+  z-index: 10000;
+}
+
+.portfolio-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.portfolio-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 3.5rem;
+  color: #333;
+  margin: 0 0 15px 0;
+  letter-spacing: -0.02em;
+}
+
+.portfolio-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+  font-weight: 400;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 25px;
+}
+
+.portfolio-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-item:focus {
+  outline: 3px solid #ff69b4;
+  outline-offset: 2px;
+}
+
+.portfolio-item-image {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.portfolio-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.portfolio-item:hover .portfolio-item-image img {
+  transform: scale(1.05);
+}
+
+.portfolio-item-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 25px 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  color: white;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-item-overlay {
+  transform: translateY(0);
+}
+
+.portfolio-item-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+}
+
+.portfolio-item-desc {
+  font-size: 0.85rem;
+  margin: 0;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+/* ===========================================
+   LIGHTBOX STYLES
+   =========================================== */
+
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: lightboxFadeIn 0.3s ease;
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 60px;
+  box-sizing: border-box;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.lightbox-nav:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.lightbox-prev {
+  left: 20px;
+}
+
+.lightbox-prev:hover {
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.lightbox-next {
+  right: 20px;
+}
+
+.lightbox-next:hover {
+  transform: translateY(-50%) translateX(3px);
+}
+
+.lightbox-image-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: calc(100% - 120px);
+  width: 100%;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: lightboxImageIn 0.4s ease;
+}
+
+@keyframes lightboxImageIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Clickable area for "Click here!" text in bottom right of portfolio images */
+.lightbox-click-area {
+  position: absolute;
+  bottom: 1%;
+  right: 32%;
+  width: 70px;
+  height: 21px;
+  z-index: 5;
+  cursor: pointer;
+  /* Visual feedback */
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+}
+
+.lightbox-click-area:hover {
+  background-color: rgba(255, 105, 180, 0.15);
+}
+
+.lightbox-click-area:focus {
+  outline: 2px solid #ff69b4;
+  outline-offset: 2px;
+}
+
+.lightbox-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px 0;
+  color: white;
+}
+
+.lightbox-title-section {
+  flex: 1;
+}
+
+.lightbox-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  color: white;
+}
+
+.lightbox-description {
+  font-size: 0.95rem;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.lightbox-counter {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  font-weight: 500;
+  padding-left: 20px;
+}
+
+.lightbox-thumbnails {
+  display: flex;
+  gap: 8px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* Hide scrollbar in Firefox */
+}
+
+/* Hide scrollbar in Chrome/Safari */
+.lightbox-thumbnails::-webkit-scrollbar {
+  display: none;
+}
+
+.lightbox-thumbnail {
+  flex-shrink: 0;
+  width: 60px;
+  height: 75px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+  opacity: 0.5;
+  transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-thumbnail:hover {
+  opacity: 0.8;
+}
+
+.lightbox-thumbnail.active {
+  opacity: 1;
+  border-color: #ff69b4;
+  transform: scale(1.05);
+}
+
+.lightbox-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .portfolio-section {
+    padding: 60px 20px;
+  }
+
+  .portfolio-title {
+    font-size: 2.5rem;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .lightbox-content {
+    padding: 60px 20px;
+  }
+
+  .lightbox-nav {
+    width: 44px;
+    height: 44px;
+  }
+
+  .lightbox-prev {
+    left: 10px;
+  }
+
+  .lightbox-next {
+    right: 10px;
+  }
+
+  .lightbox-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .lightbox-counter {
+    padding-left: 0;
+  }
+
+  .lightbox-thumbnail {
+    width: 50px;
+    height: 62px;
+  }
+}

@@ -1,0 +1,37 @@
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+    /* Fragrance Scope Styling */
+    .fragrance-scope {
+        /* Define tokens or base styles if needed here */
+    }
+
+    /* Fragrance specific styles active only within .fragrance-scope */
+    .fragrance-scope .fragrance-card {
+        background-color: #f8f5f2;
+        /* Default off-white */
+        border: 2px solid #333;
+        /* 10px hard shadow as requested */
+        box-shadow: 10px 10px 0px #333;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .fragrance-scope .fragrance-card:hover {
+        transform: translate(-5px, -5px);
+        box-shadow: 15px 15px 0px #B22222;
+        /* Heavy Red on hover? Or just red generally? */
+    }
+
+    .fragrance-scope .fragrance-accent {
+        color: #B22222;
+        /* Heavy Red */
+    }
+
+    .fragrance-scope .fragrance-btn {
+        background-color: #B22222;
+        color: white;
+        box-shadow: 5px 5px 0px black;
+    }
+}
