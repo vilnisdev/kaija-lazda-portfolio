@@ -19,8 +19,10 @@ body {
 .hero-section {
   height: 100vh;
   width: 100%;
+  background-image: url('./src/assets/kaija-lazda-hero-background.jpg');
+  background-size: cover;
+  background-position: center;
   background-color: var(--bg-color);
-  /* Removed background-image */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -128,14 +130,37 @@ body {
 }
 
 .hero-title {
-  font-size: 5rem;
+  font-family: 'Great Vibes', cursive;
+  font-size: 8rem;
   color: #333;
-  /* Dark text on pastel background usually better, or white if dark bg */
   font-weight: 800;
   text-align: center;
   margin: 0;
-  /* Optional: explicit text shadow if background is busy */
-  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  transition: color 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+  cursor: default;
+}
+
+.hero-title:hover {
+  color: transparent;
+  background: linear-gradient(90deg, #ff69b4, #a855f7, #3b82f6, #ff69b4);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gradient-flow 2s linear infinite;
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5)) drop-shadow(0 0 40px rgba(255, 105, 180, 0.3));
+  text-shadow: none;
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 200% 50%;
+  }
 }
 
 /* Scroll Indicator */
@@ -279,6 +304,7 @@ body {
   margin-bottom: 0;
   z-index: 10001;
   /* Matched to be above overlay */
+  background-color: var(--bg-color);
 }
 
 .main-nav ul {
@@ -311,17 +337,16 @@ body {
   text-decoration: none;
   color: #333;
   font-weight: 500;
-  /* Slightly lighter weight for elegance */
   font-size: 1.05rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  transition: color 0.2s ease;
+  transition: font-weight 0.2s ease, color 0.2s ease;
   position: relative;
 }
 
 .nav-link:hover {
+  font-weight: 700;
   color: #ff69b4;
-  /* HotPink */
 }
 
 
