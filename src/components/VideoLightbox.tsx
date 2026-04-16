@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useRef } from 'react';
+import { useSwipeGesture } from '../hooks/useSwipeGesture';
 
 interface VideoItem {
     id: number;
@@ -69,11 +70,21 @@ const VideoLightbox = ({ items, currentIndex, isOpen, onClose, onNavigate }: Vid
         };
     }, [isOpen]);
 
+    const swipeBindings = useSwipeGesture({
+        onSwipeLeft: handleNext,
+        onSwipeRight: handlePrev,
+        onSwipeDown: onClose,
+    });
+
     if (!isOpen || !currentItem) return null;
 
     return (
         <div className="lightbox-overlay" onClick={onClose}>
-            <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <div
+                className="lightbox-content"
+                onClick={(e) => e.stopPropagation()}
+                {...swipeBindings}
+            >
                 {/* Close button */}
                 <button className="lightbox-close" onClick={onClose} aria-label="Close">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
