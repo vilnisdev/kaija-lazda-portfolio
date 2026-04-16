@@ -7,11 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots"
-    "preview": "npm run build && wrangler dev",
-    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "pdf-to-img": "^5.0.0",
