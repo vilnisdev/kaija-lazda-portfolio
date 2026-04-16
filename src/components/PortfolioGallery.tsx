@@ -153,7 +153,7 @@ const PortfolioGallery = () => {
                         }}
                     >
                         <div className="portfolio-item-image">
-                            <img src={item.thumbnail || item.src} alt={item.title} loading="lazy" />
+                            <img src={item.thumbnail || item.src} alt={item.title} loading="lazy" decoding="async" />
                         </div>
                         <div className="portfolio-item-overlay">
                             <h3 className="portfolio-item-title">{item.title}</h3>

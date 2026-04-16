@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react';
+import { useSwipeGesture } from '../hooks/useSwipeGesture';
 
 interface PortfolioItem {
     id: number;
@@ -64,11 +65,21 @@ const Lightbox = ({ items, currentIndex, isOpen, onClose, onNavigate }: Lightbox
         };
     }, [isOpen]);
 
+    const swipeBindings = useSwipeGesture({
+        onSwipeLeft: handleNext,
+        onSwipeRight: handlePrev,
+        onSwipeDown: onClose,
+    });
+
     if (!isOpen || !currentItem) return null;
 
     return (
         <div className="lightbox-overlay" onClick={onClose}>
-            <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <div
+                className="lightbox-content"
+                onClick={(e) => e.stopPropagation()}
+                {...swipeBindings}
+            >
                 {/* Close button */}
                 <button className="lightbox-close" onClick={onClose} aria-label="Close">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -92,7 +103,13 @@ const Lightbox = ({ items, currentIndex, isOpen, onClose, onNavigate }: Lightbox
 
                 {/* Main image */}
                 <div className="lightbox-image-container">
-                    <img src={currentItem.src} alt={currentItem.title} className="lightbox-image" />
+                    <img
+                        src={currentItem.src}
+                        alt={currentItem.title}
+                        className="lightbox-image"
+                        decoding="async"
+                        fetchPriority="high"
+                    />
                     {/* Clickable overlay for "Click here!" text in bottom right */}
                     {currentItem.link && (
                         <a
@@ -115,7 +132,7 @@ const Lightbox = ({ items, currentIndex, isOpen, onClose, onNavigate }: Lightbox
                             onClick={() => onNavigate(index)}
                             aria-label={`View ${item.title}`}
                         >
-                            <img src={item.thumbnail || item.src} alt={item.title} />
+                            <img src={item.thumbnail || item.src} alt={item.title} loading="lazy" decoding="async" />
                         </button>
                     ))}
                 </div>
