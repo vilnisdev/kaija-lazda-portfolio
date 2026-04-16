@@ -1,5 +1,6 @@
 import React from 'react';
 import Lightbox from './Lightbox';
+import VideoLightbox from './VideoLightbox';
 
 // Import new portfolio images
 import xmasRed from '../assets/priec-gus-ziemassv-tkus-red-pages/page-01.webp';
@@ -20,6 +21,16 @@ const InternshipExperience: React.FC = () => {
 
     const [socialMediaLightboxOpen, setSocialMediaLightboxOpen] = React.useState(false);
     const [socialMediaCurrentIndex, setSocialMediaCurrentIndex] = React.useState(0);
+
+    const [videoLightboxOpen, setVideoLightboxOpen] = React.useState(false);
+    const [videoCurrentIndex, setVideoCurrentIndex] = React.useState(0);
+
+    const videoItems = [
+        { id: 20, src: '/videos/jani flowers.mp4', title: 'Jani Flowers', description: 'Motion graphics for Jāņi celebration' },
+        { id: 21, src: '/videos/ligo video (1) (2).mp4', title: 'Ligo Festival', description: 'Animated greeting for Ligo celebration' },
+        { id: 22, src: '/videos/lv rep diena.mp4', title: 'Latvia Republic Day', description: 'Motion graphic for Republic Day' },
+        { id: 23, src: '/videos/zinibu diena practice.mp4', title: 'Knowledge Day', description: 'Animated greeting for first of September' },
+    ];
 
     const socialMediaItems = [
         {
@@ -136,6 +147,13 @@ const InternshipExperience: React.FC = () => {
                             >
                                 Social Media
                             </button>
+                            <button
+                                onClick={() => setVideoLightboxOpen(true)}
+                                className="cta-button"
+                                style={{ padding: '10px 25px', fontSize: '0.85rem' }}
+                            >
+                                Videos
+                            </button>
                         </div>
 
                     </div>
@@ -156,6 +174,14 @@ const InternshipExperience: React.FC = () => {
                 isOpen={socialMediaLightboxOpen}
                 onClose={() => setSocialMediaLightboxOpen(false)}
                 onNavigate={setSocialMediaCurrentIndex}
+            />
+
+            <VideoLightbox
+                items={videoItems}
+                currentIndex={videoCurrentIndex}
+                isOpen={videoLightboxOpen}
+                onClose={() => setVideoLightboxOpen(false)}
+                onNavigate={setVideoCurrentIndex}
             />
         </section>
     );
