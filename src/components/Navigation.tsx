@@ -28,6 +28,11 @@ const Navigation = () => {
                 <span className={`nav-toggle-bar ${isOpen ? 'open' : ''}`} />
             </button>
             <div
+                className={`nav-scrim ${isOpen ? 'open' : ''}`}
+                aria-hidden="true"
+                onClick={close}
+            />
+            <div
                 id="nav-panel"
                 ref={panelRef}
                 className={`nav-panel ${isOpen ? 'open' : ''}`}
