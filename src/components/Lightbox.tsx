@@ -103,22 +103,30 @@ const Lightbox = ({ items, currentIndex, isOpen, onClose, onNavigate }: Lightbox
 
                 {/* Main image */}
                 <div className="lightbox-image-container">
-                    <img
-                        src={currentItem.src}
-                        alt={currentItem.title}
-                        className="lightbox-image"
-                        decoding="async"
-                        fetchPriority="high"
-                    />
-                    {/* Clickable overlay for "Click here!" text in bottom right */}
-                    {currentItem.link && (
+                    {currentItem.link ? (
                         <a
                             href={currentItem.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="lightbox-click-area"
+                            className="lightbox-image-link"
                             aria-label="View full project"
                             onClick={(e) => e.stopPropagation()}
+                        >
+                            <img
+                                src={currentItem.src}
+                                alt={currentItem.title}
+                                className="lightbox-image"
+                                decoding="async"
+                                fetchPriority="high"
+                            />
+                        </a>
+                    ) : (
+                        <img
+                            src={currentItem.src}
+                            alt={currentItem.title}
+                            className="lightbox-image"
+                            decoding="async"
+                            fetchPriority="high"
                         />
                     )}
                 </div>

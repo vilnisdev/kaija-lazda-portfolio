@@ -588,25 +588,14 @@ body {
   }
 }
 
-/* Clickable area for "Click here!" text in bottom right of portfolio images */
-.lightbox-click-area {
-  position: absolute;
-  bottom: 1%;
-  right: 32%;
-  width: 70px;
-  height: 21px;
-  z-index: 5;
+.lightbox-image-link {
+  display: inline-flex;
+  line-height: 0;
   cursor: pointer;
-  /* Visual feedback */
-  transition: background-color 0.2s ease;
   border-radius: 4px;
 }
 
-.lightbox-click-area:hover {
-  background-color: rgba(255, 105, 180, 0.15);
-}
-
-.lightbox-click-area:focus {
+.lightbox-image-link:focus-visible {
   outline: 2px solid #ff69b4;
   outline-offset: 2px;
 }
