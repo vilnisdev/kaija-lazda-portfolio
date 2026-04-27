@@ -95,7 +95,8 @@ const portfolioItems: PortfolioItem[] = [
         src: heiwaChair,
         thumbnail: heiwaChairThumb,
         title: 'Heiwa Chair',
-        description: ''
+        description: '',
+        link: 'https://www.flipsnack.com/A6E9CEB569B/workshop2_cardboardchair_kaijalazda'
     },
     {
         id: 9,
